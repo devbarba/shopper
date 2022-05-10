@@ -1,0 +1,36 @@
+version: '3.1'
+
+services:
+    shopper-mongodb:
+        image: mongo:latest
+        container_name: shopper-mongodb
+        restart: always
+        ports:
+            - '${MONGO_PORT}:${MONGO_PORT}'
+        volumes:
+            - ./docker/initMongo.js:/docker-entrypoint-initdb.d/initMongo.js:ro
+            - ./docker/mongo-volume:/data/db
+        environment:
+            - MONGO_INITDB_DATABASE=${MONGO_DB_NAME}
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASS}
+    shopper-app:
+        build: .
+        ports:
+            - '${APP_PORT}:${APP_PORT}'
+        volumes:
+            - ./docker/scripts:/usr/shopper/scripts
+            - .:/usr/shopper/app
+            - /usr/shopper/app/node_modules
+        working_dir: /usr/shopper/app
+        command: sh -c "chmod +x /usr/shopper/scripts/init.sh && /usr/shopper/scripts/init.sh"
+        links:
+            - shopper-mongodb
+        depends_on:
+            - shopper-mongodb
+        # healthcheck:
+        #     test: ["CMD", "curl", "-f", 'http://${APP_HOST}:${APP_PORT}/api']
+        #     interval: 20s
+        #     timeout: 5s
+        #     retries: 5
+        #     start_period: 1m30s
