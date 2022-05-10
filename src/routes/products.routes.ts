@@ -21,4 +21,25 @@ productsRouter.get(
     }),
 );
 
+productsRouter.post(
+    '/',
+    (req: Request, res: Response, next: NextFunction) => productsController.create({
+        req, res, next, app: new App(),
+    }),
+);
+
+productsRouter.put(
+    '/:sku',
+    (req: Request, res: Response, next: NextFunction) => productsController.update({
+        req, res, next, app: new App(),
+    }),
+);
+
+productsRouter.delete(
+    '/:sku',
+    (req: Request, res: Response, next: NextFunction) => productsController.destroy({
+        req, res, next, app: new App(),
+    }),
+);
+
 export default productsRouter;

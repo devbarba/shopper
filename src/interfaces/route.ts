@@ -4,8 +4,8 @@ import { Request, Response } from 'express';
 interface IRouteSource {
     req: Request;
     res: Response;
+    next: CallableFunction;
     app?: App;
-    next?: CallableFunction;
 }
 
 export { IRouteSource };
