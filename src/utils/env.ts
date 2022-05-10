@@ -13,7 +13,7 @@ dotenv.config({
  * @returns IConfig
  */
 function autoLoadEnvironmentVariables(envsDir: string): IConfig {
-    const configDir = path.resolve(envsDir, 'configs');
+    const configDir = path.resolve(envsDir, 'config');
 
     if (!fs.existsSync(configDir)) {
         throw new Error('configs dir does not exists');
@@ -35,4 +35,20 @@ function autoLoadEnvironmentVariables(envsDir: string): IConfig {
     return configurations;
 }
 
-export { autoLoadEnvironmentVariables };
+/**
+ * Return environment variable by key or return alternate.
+ * @param key string
+ * @param alternate string
+ * @returns string | undefined
+ */
+function getEnv(key: string, alternate: string): string | undefined {
+    if (process.env[key] && process.env[key] !== null) return process.env[key];
+
+    if (process.env[alternate] && process.env[alternate] !== null) {
+        return process.env[alternate];
+    }
+
+    return alternate;
+}
+
+export { autoLoadEnvironmentVariables, getEnv };
