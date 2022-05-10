@@ -1,0 +1,45 @@
+{
+    "env": {
+        "es6": true,
+        "node": true,
+        "jest": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module",
+        "project": "tsconfig.json"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "ignorePatterns": [".eslintrc.json", "babel.config.js"],
+    "rules": {
+        "indent": ["error", 4],
+        "interface-name-prefix": "off",
+        "explicit-function-return-type": "off",
+        "explicit-module-boundary-types": "off",
+        "no-explicit-any": "off",
+        "no-dynamic-require": "off",
+        "class-methods-use-this": "off",
+        "no-restricted-imports": "off",
+        "import/no-unresolved": "off",
+        "import/extensions": "off",
+        "import/prefer-default-export": "off",
+        "import/no-dynamic-require": "off",
+        "global-require": "off",
+        "no-console": "off",
+        "no-useless-constructor": "off",
+        "camelcase": "off",
+        "no-unused-vars": "off",
+        "no-throw-literal": "off",
+        "max-len": "off",
+        "no-await-in-loop": "off",
+        "no-return-await": "off",
+        "no-useless-return": "off",
+        "no-unused-expressions": "off"
+    }
+}
