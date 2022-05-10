@@ -14,4 +14,11 @@ productsRouter.get(
     }),
 );
 
+productsRouter.get(
+    '/:sku',
+    (req: Request, res: Response, next: NextFunction) => productsController.retrieve({
+        req, res, next, app: new App(),
+    }),
+);
+
 export default productsRouter;
