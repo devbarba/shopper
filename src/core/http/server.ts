@@ -42,10 +42,14 @@ class Server implements IServer {
         this.express.use('/', routes);
 
         // error handling
-        this.express.use((error, req, res, next) => res.status(error?.status_code ?? 500).json({
-            message: error?.message,
-            errors: error instanceof Handler ? error?.getErrors() : [],
-        }));
+        this.express.use((error, req, res, next) => {
+            const isErrorHandler = error instanceof Handler;
+
+            return res.status(isErrorHandler ? error.getStatusCode() : 500).json({
+                message: isErrorHandler ? error.getMessage() : error.message,
+                errors: isErrorHandler ? error.getErrors() : [],
+            });
+        });
     }
 
     /**
