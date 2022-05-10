@@ -134,7 +134,7 @@ class ProductsController implements IProductsController {
 
             const product = await ProductModel.findOneAndUpdate({ sku: skuParam }, {
                 sku, name, size, price, stockLevel,
-            }, { new: true }).select('-__v');
+            }, { new: true }).select('-_id -__v');
 
             if (!product) {
                 throw new Handler(
