@@ -12,6 +12,7 @@ module.exports = {
       ['module-resolver', {
         alias: {
           configs: './src/configs',
+          utils: './src/utils',
           interfaces: './src/interfaces',
           core: './src/core',
           app: './src/app',
