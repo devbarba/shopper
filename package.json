@@ -20,6 +20,10 @@
   "license": "ISC",
   "homepage": "https://github.com/devbarba/shopper#readme",
   "scripts": {
+    "clean": "rm -rf ./dist && mkdir dist",
+    "build": "npm run clean && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
+    "start": "babel-node -- ./dist/index.js",
+    "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
     "test": "jest"
   },
   "dependencies": {
@@ -56,6 +60,7 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.12.0",
     "@typescript-eslint/parser": "^5.12.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
     "eslint": "^8.9.0",
     "eslint-config-airbnb-base": "^15.0.0",
