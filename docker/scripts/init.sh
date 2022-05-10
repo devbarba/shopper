@@ -1,4 +1,6 @@
-cp .env.example .env && \
+cp .env.example .env
+
+# cp .env.example .env && \
 # npm install && \
 # npm run importData && \
 # npm run build && \
