@@ -15,6 +15,7 @@ module.exports = {
           utils: './src/utils',
           interfaces: './src/interfaces',
           core: './src/core',
+          routes: './src/routes',
           app: './src/app',
         },
       }],
