@@ -38,10 +38,10 @@ function autoLoadEnvironmentVariables(envsDir: string): IConfig {
 /**
  * Return environment variable by key or return alternate.
  * @param key string
- * @param alternate string
- * @returns string | undefined
+ * @param alternate string | number
+ * @returns string | number | undefined
  */
-function getEnv(key: string, alternate: string): string | undefined {
+function getEnv(key: string, alternate: string | number): string | number | undefined {
     if (process.env[key] && process.env[key] !== null) return process.env[key];
 
     if (process.env[alternate] && process.env[alternate] !== null) {
