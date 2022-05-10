@@ -1,6 +1,7 @@
 import { getProjectDir } from 'utils/dir';
 import { autoLoadEnvironmentVariables } from 'utils/env';
 import _ from 'lodash';
+import mongoose from 'mongoose';
 
 interface IApp {
     start(server: () => void): void
@@ -24,11 +25,36 @@ class App implements IApp {
     }
 
     /**
+     * MongoDB connection
+     */
+    databaseConnection() {
+        const {
+            user, password, host, port, database,
+        } = this.config('database.database');
+
+        mongoose
+            .connect(`mongodb://${user}:${password}@${host}:${port}/${database}`, {
+                useCreateIndex: true,
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+            })
+            .catch(() => process.exit(1));
+    }
+
+    /**
+     * Register all things that the application needs.
+     */
+    async register(): Promise<void> {
+        this.databaseConnection();
+    }
+
+    /**
      * Start express listening;
      * @param server Express.listen()
+     * @returns Promise<void>
      */
-    start(server: () => void): void {
-        server();
+    async start(server: () => void): Promise<void> {
+        await this.register().finally(() => server());
     }
 }
 
