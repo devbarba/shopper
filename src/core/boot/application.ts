@@ -1,4 +1,4 @@
-import App from '../app';
+import App from 'core/app';
 
 let instance: App | null = null;
 

@@ -1,5 +1,8 @@
+import Handler from 'core/handler';
 import express, { Express } from 'express';
-import App from '../app';
+import App from 'core/app';
+import Http from 'core/http/middlewares/http';
+import routes from 'routes/index';
 
 interface IServer {
     start: (afterStart?: () => unknown) => void;
@@ -28,6 +31,23 @@ class Server implements IServer {
     }
 
     /**
+     * Register middleware`s, routes and error handling.
+     */
+    register(): void {
+        // global http middleware`s
+        Http.init(this.express).mount();
+
+        // routes
+        this.express.use('/', routes);
+
+        // error handling
+        this.express.use((error, req, res, next) => res.status(error?.status_code ?? 500).json({
+            message: error?.message,
+            errors: error instanceof Handler ? error?.getErrors() : [],
+        }));
+    }
+
+    /**
      * Listen on server configuration and run any callback if exists.
      * @param afterStart afterStart () => unknown
      */
@@ -36,6 +56,7 @@ class Server implements IServer {
         const server = this.app.config('app.host.ip', '0.0.0.0');
         const environment = this.app.config('app.env', 'development');
 
+        this.register();
         this.express.listen(Number(port), String(server), () => {
             console.log(`[${environment}] - Server running @ http://${server}:${port}`);
             if (afterStart) afterStart();
