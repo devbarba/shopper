@@ -60,3 +60,4 @@ To run the integration and unit tests run the following command: `yarn test` or 
 4. Add authentication and link the logged user to the basket.
 5. Add orders api to make the user able to finish the basket.
 6. Improve basket creation logic.
+7. Can be added a pipeline using git actions to run tests automatically and deploy on Heroku or AWS for example if all are passing.
