@@ -5,7 +5,7 @@ import { OK } from 'http-status';
 import mongoose from 'mongoose';
 import request from 'supertest';
 
-describe('[GET] - /api', () => {
+describe('[GET] - /', () => {
     let server;
     const endpointToCall = '/';
 
