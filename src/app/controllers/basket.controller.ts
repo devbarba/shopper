@@ -13,6 +13,7 @@ import { Response } from 'express';
 interface IBasketController {
     retrieve: ({ req, res, next }: IRouteSource) => Promise<Response<IModelBasket>>;
     create: ({ req, res, next }: IRouteSource) => Promise<IModelBasket>;
+    destroy: ({ req, res, next }: IRouteSource) => Promise<unknown>;
 }
 
 class BasketController implements IBasketController {
@@ -108,6 +109,33 @@ class BasketController implements IBasketController {
                 // eslint-disable-next-line no-underscore-dangle
                 _id: createdBasket?._id, items, delivery, coupon, cost: productPrices,
             });
+        } catch (error) {
+            return next(error);
+        }
+    }
+
+    /**
+     * @param IRouteSource
+     * @returns Promise<any>
+     */
+    async destroy({
+        req, res, next,
+    }: IRouteSource): Promise<unknown> {
+        try {
+            const { id: basketId } = req.params;
+
+            const basket = await BasketModel.findById(basketId);
+
+            if (!basket) {
+                throw new Handler(
+                    `basket with id ${basketId} not found.`,
+                    NOT_FOUND,
+                );
+            }
+
+            await basket.delete();
+
+            return res.status(NO_CONTENT).json();
         } catch (error) {
             return next(error);
         }

@@ -21,4 +21,11 @@ basketRouter.post(
     }),
 );
 
+basketRouter.delete(
+    '/:id',
+    (req: Request, res: Response, next: NextFunction) => basketController.destroy({
+        req, res, next, app: new App(),
+    }),
+);
+
 export default basketRouter;
