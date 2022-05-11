@@ -36,7 +36,9 @@ const Product = new Schema(
     { timestamps: true },
 );
 
-const ProductModel: Model<IProductModel> = model<
+export type IModelProduct = Model<IProductModel>;
+
+const ProductModel: IModelProduct = model<
     IProductModel,
     Model<IProductModel>
 >('Product', Product);
