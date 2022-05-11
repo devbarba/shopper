@@ -3,9 +3,10 @@ import express, { Express } from 'express';
 import App from 'core/app';
 import Http from 'core/http/middlewares/http';
 import routes from 'routes/index';
+import http from 'http';
 
 interface IServer {
-    start: (afterStart?: () => unknown) => void;
+    start: (afterStart?: () => unknown) => http.Server;
 }
 
 class Server implements IServer {
@@ -56,13 +57,13 @@ class Server implements IServer {
      * Listen on server configuration and run any callback if exists.
      * @param afterStart afterStart () => unknown
      */
-    start(afterStart?: () => unknown): void {
+    start(afterStart?: () => unknown): http.Server {
         const port = this.app.config('app.host.port', 9004);
         const server = this.app.config('app.host.ip', '0.0.0.0');
         const environment = this.app.config('app.env', 'development');
 
         this.register();
-        this.express.listen(Number(port), String(server), () => {
+        return this.express.listen(Number(port), String(server), () => {
             console.log(`[${environment}] - Server running @ http://${server}:${port}`);
             if (afterStart) afterStart();
         });

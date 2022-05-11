@@ -24,7 +24,7 @@
     "build": "npm run clean && babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "babel-node -- ./dist/index.js",
     "dev": "ts-node-dev -r tsconfig-paths/register src/index.ts",
-    "test": "jest"
+    "test": "jest --silent --runInBand --coverage"
   },
   "dependencies": {
     "body-parser": "^1.20.0",
@@ -39,7 +39,8 @@
     "moment": "^2.29.3",
     "moment-timezone": "^0.5.34",
     "mongodb": "^4.4.0",
-    "mongoose": "^5.13.7"
+    "mongoose": "^5.13.7",
+    "nock": "^13.2.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.3",
