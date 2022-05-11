@@ -7,6 +7,13 @@ import {
 const basketController = new BasketController();
 const basketRouter = Router();
 
+basketRouter.get(
+    '/:id',
+    (req: Request, res: Response, next: NextFunction) => basketController.retrieve({
+        req, res, next, app: new App(),
+    }),
+);
+
 basketRouter.post(
     '/',
     (req: Request, res: Response, next: NextFunction) => basketController.create({

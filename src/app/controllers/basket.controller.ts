@@ -8,12 +8,47 @@ import Handler from 'core/handler';
 import { verifyFields } from 'utils/validate';
 import ProductModel from 'app/models/Product';
 import { Age } from 'interfaces/basket';
+import { Response } from 'express';
 
 interface IBasketController {
+    retrieve: ({ req, res, next }: IRouteSource) => Promise<Response<IModelBasket>>;
     create: ({ req, res, next }: IRouteSource) => Promise<IModelBasket>;
 }
 
 class BasketController implements IBasketController {
+    /**
+     * @param IRouteSource
+     * @returns Promise<any>
+     */
+    async retrieve({
+        req, res, next,
+    }: IRouteSource): Promise<Response<IModelBasket>> {
+        try {
+            const { id: basketId } = req.params;
+
+            const basket = await BasketModel.findById(basketId).select('-age -__v');
+
+            if (!basket) {
+                throw new Handler(
+                    `basket with id ${basketId} not found.`,
+                    NOT_FOUND,
+                );
+            }
+
+            // eslint-disable-next-line no-plusplus
+            for (let i = 0; i < basket.items.length; i++) {
+                // @ts-ignore
+                basket.items[i].product = await ProductModel.findOne({ sku: basket.items[i].sku }).select('-_id -__v -createdAt -updatedAt');
+                // @ts-ignore
+                delete basket.items[i].sku;
+            }
+
+            return res.status(OK).json(basket);
+        } catch (error) {
+            return next(error);
+        }
+    }
+
     /**
      * @param IRouteSource
      * @returns Promise<any>
@@ -65,12 +100,13 @@ class BasketController implements IBasketController {
                 productPrices += product.price;
             }
 
-            await BasketModel.create({
+            const createdBasket = await BasketModel.create({
                 items: items.map((item) => ({ sku: item.sku, quantity: item.quantity })), zip_code: delivery.zip_code, age: Age.twentyFour, coupon, cost: productPrices,
             });
 
             return res.status(CREATED).json({
-                items, delivery, coupon, cost: productPrices,
+                // eslint-disable-next-line no-underscore-dangle
+                _id: createdBasket?._id, items, delivery, coupon, cost: productPrices,
             });
         } catch (error) {
             return next(error);
