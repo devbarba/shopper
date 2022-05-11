@@ -6,6 +6,24 @@ A basic shopping api to show skills.
 
 Insomnia Collection: [Clique here to get the insomnia collecton](./resources/shopper-insomnia.json)
 
+## Primarily Used Technologies
+
+- [Node](https://nodejs.org/en/) - 14.17.0
+- [Npm](https://www.npmjs.com/) - 6.14.13
+- [Jest](https://jestjs.io/) - 27.5.1
+- [Dotenv-Safe](https://www.npmjs.com/package/dotenv-safe) - 8.2.0
+- [Express](https://expressjs.com/) - 4.17.2
+- [Mongoose](https://mongoosejs.com/) - 5.13.7
+- [Supertest](https://www.npmjs.com/package/supertest) - 6.2.2
+- [Babel](https://babeljs.io/) - 7.17.0
+- [Eslint](https://eslint.org/) - 8.9.0
+- [Joi](https://joi.dev/) - 17.6.0
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Insomnia](https://insomnia.rest/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+
 ### Prerequisites
 
 To run on docker you only need to have `docker version 20.10.5` or greather and `docker-compose version 1.29.0` or greather installed, but if you wanna to run locally, will need aditionally to have Node installed in version v12.x.x or v14.x.x.
