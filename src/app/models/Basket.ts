@@ -35,7 +35,9 @@ const Basket = new Schema(
     { timestamps: true },
 );
 
-const BasketModel: Model<IBasketModel> = model<
+export type IModelBasket = Model<IBasketModel>;
+
+const BasketModel: IModelBasket = model<
     IBasketModel,
     Model<IBasketModel>
 >('Basket', Basket);
