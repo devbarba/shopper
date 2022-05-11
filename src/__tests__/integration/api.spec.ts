@@ -1,4 +1,3 @@
-import 'core/boot/preloader';
 import Server from 'core/http/server';
 import Application from 'core/boot/application';
 import * as dotenv from 'dotenv-safe';

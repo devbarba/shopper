@@ -44,13 +44,6 @@ describe('Testing utils functions', () => {
             );
             expect.assertions(1);
         });
-
-        test('expect return missing env: MONGO_TEST', () => {
-            expect(() => getEnv('MONGO_TEST', '')).toThrow(
-                'missing key: MONGO_TEST',
-            );
-            expect.assertions(1);
-        });
     });
 
     describe('handling autoLoadEnvironmentVariables()', () => {

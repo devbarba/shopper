@@ -6,6 +6,7 @@ export default {
     collectCoverageFrom: ['src/**'],
     modulePathIgnorePatterns: [
         'dist',
+        'src/index.ts',
         'src/interfaces',
         'src/__tests__/__mocks__'
     ],
