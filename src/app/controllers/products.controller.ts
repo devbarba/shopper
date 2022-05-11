@@ -1,5 +1,5 @@
 import { IRouteSource } from 'interfaces/route';
-import ProductModel from 'app/models/Product';
+import ProductModel, { IModelProduct } from 'app/models/Product';
 import {
     OK, NOT_FOUND, CONFLICT, NO_CONTENT, CREATED, ACCEPTED,
 } from 'http-status';
@@ -7,13 +7,14 @@ import Joi from 'joi';
 import { Sizes } from 'interfaces/product';
 import Handler from 'core/handler';
 import { verifyFields } from 'utils/validate';
+import { Response } from 'express';
 
 interface IProductsController {
-    list: ({ req, res, next }: IRouteSource) => Promise<any>;
-    retrieve: ({ req, res, next }: IRouteSource) => Promise<any>;
-    create: ({ req, res, next }: IRouteSource) => Promise<any>;
-    update: ({ req, res, next }: IRouteSource) => Promise<any>;
-    destroy: ({ req, res, next }: IRouteSource) => Promise<any>;
+    list: ({ req, res, next }: IRouteSource) => Promise<Response<IModelProduct[]>>;
+    retrieve: ({ req, res, next }: IRouteSource) => Promise<Response<IModelProduct>>;
+    create: ({ req, res, next }: IRouteSource) => Promise<Response<IModelProduct>>;
+    update: ({ req, res, next }: IRouteSource) => Promise<Response<IModelProduct>>;
+    destroy: ({ req, res, next }: IRouteSource) => Promise<unknown>;
 }
 
 class ProductsController implements IProductsController {
@@ -23,7 +24,7 @@ class ProductsController implements IProductsController {
      */
     async list({
         res, next,
-    }: IRouteSource): Promise<any> {
+    }: IRouteSource): Promise<Response<IModelProduct[]>> {
         try {
             const products = await ProductModel.find().select('-_id -__v');
 
@@ -46,7 +47,7 @@ class ProductsController implements IProductsController {
      */
     async retrieve({
         req, res, next,
-    }: IRouteSource): Promise<any> {
+    }: IRouteSource): Promise<Response<IModelProduct>> {
         try {
             const { sku: productSku } = req.params;
 
@@ -71,7 +72,7 @@ class ProductsController implements IProductsController {
      */
     async create({
         req, res, next,
-    }: IRouteSource): Promise<any> {
+    }: IRouteSource): Promise<Response<IModelProduct>> {
         try {
             verifyFields(
                 req.body,
@@ -113,7 +114,7 @@ class ProductsController implements IProductsController {
      */
     async update({
         req, res, next,
-    }: IRouteSource): Promise<any> {
+    }: IRouteSource): Promise<Response<IModelProduct>> {
         try {
             verifyFields(
                 req.body,
@@ -155,7 +156,7 @@ class ProductsController implements IProductsController {
      */
     async destroy({
         req, res, next,
-    }: IRouteSource): Promise<any> {
+    }: IRouteSource): Promise<unknown> {
         try {
             const { sku: productSku } = req.params;
 
