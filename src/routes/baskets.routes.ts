@@ -21,6 +21,13 @@ basketRouter.post(
     }),
 );
 
+basketRouter.put(
+    '/:id',
+    (req: Request, res: Response, next: NextFunction) => basketController.update({
+        req, res, next, app: new App(),
+    }),
+);
+
 basketRouter.delete(
     '/:id',
     (req: Request, res: Response, next: NextFunction) => basketController.destroy({
